@@ -1,0 +1,33 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card mb-3">
+        {% if item.image %}<img src="{{ item.image.url }}" class="card-img-top" style="height:350px;object-fit:cover;">{% endif %}
+        <div class="card-body">
+          <h2>{{ item.title }}</h2>
+          <p>{{ item.description }}</p>
+          <p><strong>Category:</strong> {{ item.category }}</p>
+          <p><strong>Address:</strong> {{ item.address }} {{ item.city }} {{ item.state }}</p>
+          <div class="d-flex gap-2 mt-3">
+            {% if item.phone %}<a href="tel:{{ item.phone }}" class="btn btn-light">📞 Call</a>{% endif %}
+            {% if item.phone %}<a href="https://wa.me/{{ item.phone|cut:'+' }}" target="_blank" class="btn btn-success text-white">💬 WhatsApp</a>{% endif %}
+            {% if item.email %}<a href="mailto:{{ item.email }}" class="btn btn-primary">✉ Email</a>{% endif %}
+            {% if item.website %}<a href="{{ item.website }}" target="_blank" class="btn btn-outline-dark">Website</a>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card p-3">
+        <h5>Contact</h5>
+        {% if item.phone %}<p>Phone: {{ item.phone }}</p>{% endif %}
+        {% if item.email %}<p>Email: {{ item.email }}</p>{% endif %}
+        {% if item.website %}<p>Website: <a href="{{ item.website }}">{{ item.website }}</a></p>{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

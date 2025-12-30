@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container py-5">
+  <h2>Search</h2>
+
+  <form method="get" class="row g-2 mb-4">
+    <div class="col-md-4">{{ form.q }}</div>
+    <div class="col-md-3">{{ form.category }}</div>
+    <div class="col-md-2">{{ form.city }}</div>
+    <div class="col-md-2">{{ form.state }}</div>
+    <div class="col-md-1">
+        <button class="btn btn-primary w-100">Go</button>
+    </div>
+  </form>
+
+  <div class="row">
+    {% for item in results %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100">
+
+          {% if item.image %}
+            <img src="{{ item.image.url }}" class="card-img-top" style="height:180px;object-fit:cover;">
+          {% endif %}
+
+          <div class="card-body">
+            <h5>{{ item.title }}</h5>
+
+            <p>
+              {% if item.city %}{{ item.city }}{% endif %}
+              {% if item.state %} • {{ item.state }} {% endif %}
+            </p>
+
+            <!-- FIXED URL (DialAddress style using slug) -->
+            <a href="{% url 'business_page' item.slug %}" 
+               class="btn btn-outline-primary w-100">
+               Open →
+            </a>
+
+          </div>
+        </div>
+      </div>
+
+    {% empty %}
+      <p>No results found</p>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock %}

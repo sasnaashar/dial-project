@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h3 class="fw-bold">Delete Category</h3>
+    <p>Are you sure you want to delete <b>{{ category.name }}</b>?</p>
+
+    <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'category_admin_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

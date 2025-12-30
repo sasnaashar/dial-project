@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="mb-4">All Listings</h2>
+
+    {% if results %}
+        <div class="row">
+
+            {% for item in results %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+
+                    {% if item.image %}
+                    <img src="{{ item.image.url }}" class="card-img-top"
+                         style="height:220px; object-fit:cover;">
+                    {% endif %}
+
+                    <div class="card-body">
+                        <h5 class="card-title">{{ item.title }}</h5>
+
+                        {% if item.category %}
+                        <p class="text-muted small mb-1">
+                            Category: {{ item.category.name }}
+                        </p>
+                        {% endif %}
+
+                        <p class="card-text" style="height:60px; overflow:hidden;">
+                            {{ item.description|truncatechars:100 }}
+                        </p>
+
+                        <a href="{% url 'business_page' item.slug %}"
+                           class="btn btn-primary w-100">
+                            View Details
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+        <p>No listings found.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

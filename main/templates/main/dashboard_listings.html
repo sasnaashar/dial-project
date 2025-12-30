@@ -1,0 +1,48 @@
+{% extends "main/base.html" %}
+{% block content %}
+
+<div class="container py-5">
+    <h2 class="mb-4">All Listings</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Featured</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for item in listings %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>
+                    <a href="{% url 'business_page' item.slug %}" class="text-decoration-none">
+                        {{ item.title }}
+                    </a>
+                </td>
+                <td>{{ item.category }}</td>
+                <td>
+                    {% if item.featured %}
+                        ✅ Featured
+                    {% else %}
+                        ❌ No
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'dashboard_edit_listing' item.id %}" class="btn btn-sm btn-primary">Edit</a>
+                    <a href="{% url 'dashboard_delete_listing' item.id %}" class="btn btn-sm btn-danger">Delete</a>
+                    <a href="{% url 'dashboard_toggle_feature' item.id %}" class="btn btn-sm btn-warning">
+                        Toggle Featured
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

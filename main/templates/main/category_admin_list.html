@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container mt-5">
+    <h2 class="fw-bold">Manage Categories</h2>
+
+    <a href="{% url 'category_create' %}" class="btn btn-primary my-3">Add Category</a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Icon</th>
+                <th>Name</th>
+                <th>Slug</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for c in categories %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>
+                    {% if c.icon %}
+                        <img src="{{ c.icon.url }}" width="50">
+                    {% endif %}
+                </td>
+                <td>{{ c.name }}</td>
+                <td>{{ c.slug }}</td>
+                <td>
+                    <a href="{% url 'category_edit' c.id %}" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="{% url 'category_delete' c.id %}" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}

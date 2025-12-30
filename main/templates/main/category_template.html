@@ -1,0 +1,15 @@
+{% extends "main/base.html" %}
+{% block content %}
+
+<div class="container py-4">
+
+    <h2 class="mb-4">{{ template.name }}</h2>
+
+    <!-- This renders uploaded HTML -->
+    <div class="card shadow-sm p-4">
+        {{ html_code|safe }}
+    </div>
+
+</div>
+
+{% endblock %}
