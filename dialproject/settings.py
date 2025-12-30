@@ -20,7 +20,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-please-change-this-in-production'
-DEBUG = True
+DEBUG = False
 ALLOWED_HOSTS = ["*", ".onrender.com"]
 
 # Application definition
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -48,7 +50,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
 ROOT_URLCONF = 'dialproject.urls'
 
 # Templates - note we include both main/templates and app templates
@@ -91,9 +92,15 @@ USE_I18N = True
 USE_TZ = True
 
 # Static files
+# STATIC_URL = '/static/'
+# STATICFILES_DIRS = [ BASE_DIR / 'main' / 'static' ]
+# STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic if needed
+
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [ BASE_DIR / 'main' / 'static' ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # for collectstatic if needed
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files (uploaded images)
 MEDIA_URL = '/media/'
@@ -105,3 +112,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
+
