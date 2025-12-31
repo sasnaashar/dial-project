@@ -273,3 +273,9 @@ def category_delete(request, pk):
     category = get_object_or_404(Category, pk=pk)
     category.delete()
     return redirect("category_admin_list")
+
+# ============================================================
+# ABOUT PAGE
+# ============================================================
+def about(request):
+    return render(request, "main/about.html")    
