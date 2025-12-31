@@ -275,7 +275,11 @@ def category_delete(request, pk):
     return redirect("category_admin_list")
 
 # ============================================================
-# ABOUT PAGE
+# ABOUT PAGE (REQUIRED – DO NOT DELETE)
 # ============================================================
 def about(request):
-    return render(request, "main/about.html")    
+    """
+    Simple About page.
+    This MUST exist because urls.py references it.
+    """
+    return render(request, "main/about.html")
