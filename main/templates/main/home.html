@@ -2,106 +2,133 @@
 {% load static %}
 {% block content %}
 
-<!-- MAIN HERO BANNER -->
+<!-- ================================================= -->
+<!-- HERO BANNER (DialAddress Style) -->
+<!-- ================================================= -->
 <style>
-  .hero-section {
+.hero-section {
     background: url("{% static 'main/hero-bg.jpg' %}") center/cover no-repeat;
     position: relative;
-    padding: 120px 0 100px;
-  }
-  .hero-overlay {
-    background: rgba(0, 0, 0, 0.55);
+    padding: 120px 0;
+}
+.hero-overlay {
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-  }
-  .hero-content {
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+}
+.hero-content {
     position: relative;
-    z-index: 1;
-  }
-  .hero-input {
+    z-index: 2;
+}
+.hero-input {
     border-radius: 50px;
-    padding: 15px 25px;
-    font-size: 1.1rem;
-  }
-  .hero-button {
-    padding: 15px 30px;
-    font-size: 1.1rem;
-  }
+    padding: 14px 24px;
+}
+.hero-btn {
+    border-radius: 50px;
+    padding: 14px 28px;
+}
 </style>
 
 <div class="hero-section text-white text-center">
-  <div class="hero-overlay"></div>
+    <div class="hero-overlay"></div>
 
-  <div class="container hero-content">
-    <h1 class="display-4 fw-bold">Find Trusted Local Businesses Near You</h1>
-    <p class="lead mb-4">Search listings, explore categories, connect instantly — just like DialAddress.</p>
+    <div class="container hero-content">
+        <h1 class="fw-bold display-5">Find Local Businesses Near You</h1>
+        <p class="lead mb-4">Search & connect instantly — just like DialAddress</p>
 
-    <form action="{% url 'search' %}" method="GET">
-      <div class="row justify-content-center gx-2">
-        <div class="col-md-6">
-          <input type="text" name="q" value="{{ request.GET.q }}" class="form-control hero-input" placeholder="Search businesses, services, categories...">
-        </div>
-        <div class="col-md-2">
-          <button type="submit" class="btn btn-dark hero-button w-100">Search</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
-
-
-<!-- ===================== -->
-<!-- CATEGORY LIST -->
-<!-- ===================== -->
-<div class="container mt-5">
-  <h3 class="fw-bold text-center mb-4">Browse Categories</h3>
-
-  <div class="row justify-content-center text-center">
-    {% for c in categories %}
-    <div class="col-6 col-md-2 mb-4">
-      <a href="{% url 'category_listings' c.slug %}" class="text-decoration-none text-dark">
-        <div class="p-3">
-          <img
-            src="{% if c.icon %}{{ c.icon.url }}{% else %}{% static 'main/defaults/category.png' %}{% endif %}"
-            class="mb-2"
-            style="width:60px; height:60px; object-fit:contain;">
-          <p class="fw-semibold">{{ c.name }}</p>
-        </div>
-      </a>
+        <form action="{% url 'search' %}" method="get">
+            <div class="row justify-content-center">
+                <div class="col-md-6 mb-2">
+                    <input type="text" name="q" class="form-control hero-input"
+                           placeholder="Search business, service, category...">
+                </div>
+                <div class="col-md-2 mb-2">
+                    <button class="btn btn-dark hero-btn w-100">Search</button>
+                </div>
+            </div>
+        </form>
     </div>
-    {% endfor %}
-  </div>
 </div>
 
 
-<!-- ===================== -->
-<!-- FEATURED LISTINGS -->
-<!-- ===================== -->
+<!-- ================================================= -->
+<!-- CATEGORIES -->
+<!-- ================================================= -->
 <div class="container my-5">
-  <h3 class="fw-bold text-center mb-4">Featured Listings</h3>
+    <h3 class="fw-bold text-center mb-4">Browse Categories</h3>
 
-  <div class="row g-4">
-    {% for item in featured %}
-    <div class="col-md-4">
-      <div class="card shadow-sm border-0 h-100">
-        {% if item.image %}
-        <img src="{{ item.image.url }}" class="card-img-top" style="height:220px; object-fit:cover;">
-        {% else %}
-        <img src="{% static 'main/defaults/no-image.jpg' %}" class="card-img-top" style="height:220px; object-fit:cover;">
-        {% endif %}
-        <div class="card-body d-flex flex-column">
-          <h5 class="fw-bold">{{ item.title }}</h5>
-          <p class="text-secondary small">{{ item.description|truncatechars:90 }}</p>
-          <a href="{% url 'business_page' item.slug %}" class="btn btn-primary mt-auto">
-            View Details →
-          </a>
+    <div class="row text-center justify-content-center">
+        {% for c in categories %}
+        <div class="col-6 col-md-2 mb-4">
+            <a href="{% url 'category_listings' c.slug %}" class="text-decoration-none text-dark">
+                <img src="{% if c.icon %}{{ c.icon.url }}{% else %}{% static 'main/defaults/category.png' %}{% endif %}"
+                     style="width:60px;height:60px;object-fit:contain;">
+                <p class="fw-semibold mt-2">{{ c.name }}</p>
+            </a>
         </div>
-      </div>
+        {% endfor %}
     </div>
-    {% empty %}
-    <p class="text-center">No featured listings yet.</p>
-    {% endfor %}
-  </div>
+</div>
+
+
+<!-- ================================================= -->
+<!-- FEATURED LISTINGS (WITH ACTION ICONS ❤️) -->
+<!-- ================================================= -->
+<div class="container my-5">
+    <h3 class="fw-bold text-center mb-4">Featured Listings</h3>
+
+    <div class="row g-4">
+        {% for item in featured %}
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 border-0">
+
+                {% if item.image %}
+                <img src="{{ item.image.url }}" class="card-img-top"
+                     style="height:220px;object-fit:cover;">
+                {% endif %}
+
+                <div class="card-body d-flex flex-column">
+                    <h5 class="fw-bold">{{ item.title }}</h5>
+                    <p class="text-muted small">{{ item.description|truncatechars:90 }}</p>
+
+                    <!-- ACTION ICONS -->
+                    <div class="d-flex gap-2 mb-3">
+
+                        {% if item.phone %}
+                        <a href="tel:{{ item.phone }}" class="btn btn-outline-primary btn-sm w-100">
+                            📞 Call
+                        </a>
+                        {% endif %}
+
+                        {% if item.phone %}
+                        <a href="https://wa.me/{{ item.phone|cut:'+' }}" target="_blank"
+                           class="btn btn-success btn-sm w-100">
+                            💬 WhatsApp
+                        </a>
+                        {% endif %}
+
+                        {% if item.website %}
+                        <a href="{{ item.website }}" target="_blank"
+                           class="btn btn-outline-dark btn-sm w-100">
+                            🌐 Website
+                        </a>
+                        {% endif %}
+
+                    </div>
+
+                    <!-- VIEW DETAILS -->
+                    <a href="{% url 'business_page' item.slug %}"
+                       class="btn btn-primary mt-auto">
+                        View Details →
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No featured listings available.</p>
+        {% endfor %}
+    </div>
 </div>
 
 {% endblock %}
